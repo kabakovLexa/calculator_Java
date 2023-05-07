@@ -15,126 +15,143 @@ public class Main {
         String[] ar1 = s.split(" ");
         int av = ar1.length;
 
-        if (av<2){
+        if (av < 2) {
             System.out.println("throws Exception //т.к. строка не является математической операцией");
             System.exit(-1);
-        }else if (containsMultipleOperators(s)){
+        } else if (containsMultipleOperators(s)) {
             System.out.println("throws Exception //т.к. формат математической операции не удовлетворяет заданию - два операнда и один оператор (+, -, /, *)");
             System.exit(-1);
         }
 
-        if (addition != -1){
-            String[] ar = s.split("\\+");
+        try {
+            if (addition != -1) {
+                String[] ar = s.split("\\+");
 
-            if (ar.length >2 ){
+                if (ar.length > 2) {
 
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
-            } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim())) {
-                int a = Integer.parseInt(ar[0].trim());
-                int b = Integer.parseInt(ar[1].trim());
-                if (a <= 10 && b <= 10 && a >= 1 && b >= 1 ) {
-                    System.out.println(a+b);
-                }else {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
+                } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    int a = Integer.parseInt(ar[0].trim());
+                    int b = Integer.parseInt(ar[1].trim());
+                    if (a <= 10 && b <= 10 && a >= 1 && b >= 1) {
+                        System.out.println(a + b);
+                    } else {
 //                    throw new Exception("throws Exception //т.к. калькулятор должен принимать на вход числа от 1 до 10 включительно");
+                    }
+
+                } else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())) {
+                    int a = romanToArabic(ar[0].trim());
+                    int b = romanToArabic(ar[1].trim());
+
+                    if (a <= 10 && b <= 10 && a >= 1 && b >= 1) {
+                        System.out.println(arabicToRoman(a + b));
+                    }
+
+
+                } else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    System.out.println("throws Exception //т.к. используются одновременно разные системы счисления");
+                } else {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
                 }
-
-            }else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())){
-                int a=romanToArabic(ar[0].trim());
-                int b=romanToArabic(ar[1].trim());
-
-                if (a <= 10 && b <= 10 && a >= 1 && b >= 1 ) {
-                    System.out.println(arabicToRoman(a+b));
-                }
-
-
-            }else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim()) ){
-                System.out.println("throws Exception //т.к. используются одновременно разные системы счисления");
-            }else {
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
             }
+        } catch (ArithmeticException e) {
+            throw new ArithmeticException("Ошибка");
         }
 
-        if (subtraction != -1){
-            String[] ar = s.split("\\-");
+        try {
+            if (subtraction != -1) {
+                String[] ar = s.split("\\-");
 
-            if (ar.length >2 ){
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
-            } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim()) ) {
-                int a = Integer.parseInt(ar[0].trim());
-                int b = Integer.parseInt(ar[1].trim());
-                if (a <= 10 && b <= 10 && a >= 1 && b >= 1 ) {
-                    System.out.println(a-b);
-                }else {
-                    System.out.println("throws Exception //т.к. калькулятор должен принимать на вход числа от 1 до 10 включительно");
-                }
+                if (ar.length > 2) {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
+                } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    int a = Integer.parseInt(ar[0].trim());
+                    int b = Integer.parseInt(ar[1].trim());
+                    if (a <= 10 && b <= 10 && a >= 1 && b >= 1) {
+                        System.out.println(a - b);
+                    } else {
+                        System.out.println("throws Exception //т.к. калькулятор должен принимать на вход числа от 1 до 10 включительно");
+                    }
 
-            }else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())){
-                int a=romanToArabic(ar[0].trim());
-                int b=romanToArabic(ar[1].trim());
-                int c = a - b;
-                if (a <= 10 && b <= 10 && a >= 1 && b >= 1 && c>1) {
-                    System.out.println(arabicToRoman(c));
-                }else {
-                    System.out.println("throws Exception //т.к. в римской системе нет отрицательных чисел");
+                } else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())) {
+                    int a = romanToArabic(ar[0].trim());
+                    int b = romanToArabic(ar[1].trim());
+                    int c = a - b;
+                    if (a <= 10 && b <= 10 && a >= 1 && b >= 1 && c > 1) {
+                        System.out.println(arabicToRoman(c));
+                    } else {
+                        System.out.println("throws Exception //т.к. в римской системе нет отрицательных чисел");
+                    }
+                } else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    System.out.println("hrows Exception //т.к. используются одновременно разные системы счисления");
+                } else {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
                 }
-            }else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim()) ){
-                System.out.println("hrows Exception //т.к. используются одновременно разные системы счисления");
-            }else {
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
             }
-    }
-
-        if (multiplication != -1){
-            String[] ar = s.split("\\*");
-            if (ar.length >2 ){
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
-            } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim()) ) {
-                int a = Integer.parseInt(ar[0].trim());
-                int b = Integer.parseInt(ar[1].trim());
-                if (a <= 10 && b <= 10 && a >= 1 ) {
-                    System.out.println(a*b);
-                }
-            }else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())){
-                int a=romanToArabic(ar[0].trim());
-                int b=romanToArabic(ar[1].trim());
-
-                if (a <= 10 && b <= 10 && a >= 1 && b >= 1 ) {
-                    System.out.println(arabicToRoman(a*b));
-                }else {
-                    System.out.println("throws Exception //т.к. в римской системе нет отрицательных чисел");
-                }
-            }else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim()) ){
-                System.out.println("throws Exception //т.к. используются одновременно разные системы счисления");
-            }else {
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
-            }
+        } catch (ArithmeticException e) {
+            throw new ArithmeticException("Ошибка");
         }
 
-        if (division != -1){
-            String[] ar = s.split("\\/");
+        try {
+            if (multiplication != -1) {
+                String[] ar = s.split("\\*");
+                if (ar.length > 2) {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
+                } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    int a = Integer.parseInt(ar[0].trim());
+                    int b = Integer.parseInt(ar[1].trim());
+                    if (a <= 10 && b <= 10 && a >= 1) {
+                        System.out.println(a * b);
+                    }
+                } else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())) {
+                    int a = romanToArabic(ar[0].trim());
+                    int b = romanToArabic(ar[1].trim());
 
-            if (ar.length >2 ){
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
-            } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim()) ) {
-                int a = Integer.parseInt(ar[0].trim());
-                int b = Integer.parseInt(ar[1].trim());
-                if (a <= 10 && b <= 10 && a >= 1 && b >= 1 ) {
-                    System.out.println(a/b);
-                }else {
-                    System.out.println("throws Exception //т.к. калькулятор должен принимать на вход числа от 1 до 10 включительно");
+                    if (a <= 10 && b <= 10 && a >= 1 && b >= 1) {
+                        System.out.println(arabicToRoman(a * b));
+                    } else {
+                        System.out.println("throws Exception //т.к. в римской системе нет отрицательных чисел");
+                    }
+                } else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    System.out.println("throws Exception //т.к. используются одновременно разные системы счисления");
+                } else {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
                 }
-            }else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())){
-                int a=romanToArabic(ar[0].trim());
-                int b=romanToArabic(ar[1].trim());
-
-                if (a <= 10 && b <= 10 && a >= 1 && b >= 1 ) {
-                    System.out.println(arabicToRoman(a/b));
-                }
-            }else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim()) ){
-                System.out.println("throws Exception //т.к. используются одновременно разные системы счисления");
-            }else {
-                System.out.println("throws Exception //т.к. строка не является математической операцией");
             }
+        } catch (ArithmeticException e) {
+            throw new ArithmeticException("Ошибка");
+        }
+
+        try {
+            if (division != -1) {
+                String[] ar = s.split("\\/");
+
+                if (ar.length > 2) {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
+                } else if (isNumber(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    int a = Integer.parseInt(ar[0].trim());
+                    int b = Integer.parseInt(ar[1].trim());
+                    if (a <= 10 && b <= 10 && a >= 1 && b >= 1) {
+                        System.out.println(a / b);
+                    } else {
+                        System.out.println("throws Exception //т.к. калькулятор должен принимать на вход числа от 1 до 10 включительно");
+                    }
+                } else if (isRomanNumeral(ar[0].trim()) && isRomanNumeral(ar[1].trim())) {
+                    int a = romanToArabic(ar[0].trim());
+                    int b = romanToArabic(ar[1].trim());
+
+                    if (a <= 10 && b <= 10 && a >= 1 && b >= 1) {
+                        System.out.println(arabicToRoman(a / b));
+                    }
+                } else if (isNumber(ar[0].trim()) && isRomanNumeral(ar[1].trim()) || isRomanNumeral(ar[0].trim()) && isNumber(ar[1].trim())) {
+                    System.out.println("throws Exception //т.к. используются одновременно разные системы счисления");
+                } else {
+                    System.out.println("throws Exception //т.к. строка не является математической операцией");
+                }
+
+            }
+        }catch (ArithmeticException e){
+            throw new ArithmeticException("Ошибка");
         }
     }
 
@@ -261,12 +278,3 @@ public class Main {
         return false;
     }
 
-
-    public static void jeka() {
-        try {
-            int a = 5 / 1;
-        } catch (ArithmeticException e) {
-            throw new ArithmeticException("я долбаеб");
-        }
-    }
-}
